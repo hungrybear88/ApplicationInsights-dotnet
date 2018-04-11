@@ -86,29 +86,17 @@
         /// <summary>
         /// Gets the Address of the endpoint to which transmission will be sent.
         /// </summary>
-        public Uri EndpointAddress
-        {
-            get;
-            private set;
-        }
+        public Uri EndpointAddress { get; private set; }
 
         /// <summary>
         /// Gets the content of the transmission.
         /// </summary>
-        public byte[] Content
-        {
-            get;
-            private set;
-        }
+        public byte[] Content { get; private set; }
 
         /// <summary>
         /// Gets the content's type of the transmission.
         /// </summary>
-        public string ContentType
-        {
-            get;
-            private set;
-        }
+        public string ContentType { get; private set; }
 
         /// <summary>
         /// Gets the encoding method of the transmission.
@@ -122,27 +110,17 @@
         /// <summary>
         /// Gets a timeout value for the transmission.
         /// </summary>
-        public TimeSpan Timeout
-        {
-            get;
-            internal set;
-        }
+        public TimeSpan Timeout { get; internal set; }
 
         /// <summary>
         /// Gets an id of the transmission.
         /// </summary>
-        public string Id
-        {
-            get; private set;
-        }
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets the number of telemetry items in the transmission.
         /// </summary>
-        public ICollection<ITelemetry> TelemetryItems
-        {
-            get; private set;
-        }
+        public ICollection<ITelemetry> TelemetryItems { get; private set; }
 
         /// <summary>
         /// Executes the request that the current transmission represents.

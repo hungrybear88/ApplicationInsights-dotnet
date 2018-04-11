@@ -35,21 +35,21 @@
     /// </p>
     /// <p>
     /// This implementation assumes that creation and storage of TPoint-elements is resource intensive. It creates points lazily, only when requested.
-    /// However, to minimize locking it uses pessimistic and optimistic concurrency mechanisms where possible. Two artefacts occur as a result:
+    /// However, to minimize locking it uses pessimistic and optimistic concurrency mechanisms where possible. Two artifacts occur as a result:
     /// </p>
     /// <list type="bullet">
     ///   <item><description>The specified <c>pointsFactory</c> delegate may be executed more than once for a particular coordinates vector.
     ///     However, once a point for the specified coordinates-vector has been actually returned to the caller, always the same instance of
-    ///     that point will be returned by the cube. This behaviour is consistent with the ConcurrentDictionary in the .NET Framework.</description></item>
+    ///     that point will be returned by the cube. This behavior is consistent with the ConcurrentDictionary in the .NET Framework.</description></item>
     ///   <item><description>The <c>TryGetOrCreatePoint(..)</c> may return <c>false</c>, and then return <c>true</c> moments later when called with the
-    ///     same parameters. This is becasue in order to avoid locking the cube pre-books dimension value counts (and total points counts) and later
+    ///     same parameters. This is because in order to avoid locking the cube pre-books dimension value counts (and total points counts) and later
     ///     frees them up if the creation of a new point did not complete.
-    ///     Notably, this artefact does not represent any probems in practice: It occurs only in cuncurrent races when the number of values of a
+    ///     Notably, this artifact does not represent any problems in practice: It occurs only in concurrent races when the number of values of a
     ///     dimension (or the total number of points) is close to the limit, where applications should not rely on a particular outcome of adding a
     ///     point anyway. In common cases one can assume that the result of <c>TryGetOrCreatePoint(..)</c> is, indeed, stable.
     ///     In order to control potential instability use <c>TryGetOrCreatePointAsync(..)</c> overloads.
     ///     Note, however, that those overloads do not guarantee that the result of requesting a new point is completely stable. They merely make it
-    ///     very unlikely for it to change by re-trying the oprtation several times.</description></item>
+    ///     very unlikely for it to change by re-trying the importation several times.</description></item>
     /// </list>
     /// </summary>
     /// <remarks>
@@ -153,7 +153,7 @@
     internal class MultidimensionalCube<TDimensionValue, TPoint>
     {
         /// <summary>
-        /// We are using a recursive implementation for points creation so we are limiting the max dimension count to prevent strack overflow.
+        /// We are using a recursive implementation for points creation so we are limiting the max dimension count to prevent stack overflow.
         /// In practice this is unlikely to be ever reached.
         /// If it nevertheless becomes an issue, we can change the implementation to be iterative and increase this limit.
         /// </summary>
@@ -361,7 +361,7 @@
             { 
                 if (Math.Round(timeout.TotalMilliseconds) >= (double)Int32.MaxValue)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(timeout), $"{nameof(timeout)} must be smaller than {Int32.MaxValue} msec, but it is {timeout}.");
+                    throw new ArgumentOutOfRangeException(nameof(timeout), $"{nameof(timeout)} must be smaller than {Int32.MaxValue} millisecond, but it is {timeout}.");
                 }
 
                 if (Math.Round(timeout.TotalMilliseconds) < 1)
@@ -372,7 +372,7 @@
 
             if (Math.Round(sleepDuration.TotalMilliseconds) > (double)Int32.MaxValue)
             {
-                throw new ArgumentOutOfRangeException(nameof(sleepDuration), $"{nameof(sleepDuration)} must be smaller than {Int32.MaxValue} msec, but it is {sleepDuration}.");
+                throw new ArgumentOutOfRangeException(nameof(sleepDuration), $"{nameof(sleepDuration)} must be smaller than {Int32.MaxValue} millisecond, but it is {sleepDuration}.");
             }
 
             if (Math.Round(sleepDuration.TotalMilliseconds) < 0)
@@ -425,7 +425,7 @@
                     }
                 }
 
-                await Task.Delay(delayMillis, cancelToken);
+                await Task.Delay(delayMillis, cancelToken).ConfigureAwait(false);
             }
         }
 
